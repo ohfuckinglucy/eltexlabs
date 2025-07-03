@@ -60,7 +60,7 @@ void prog4() {
     char str2[100];
     char c;
     int i = 0;
-    char *point = NULL;
+    char *point;
 
     int ch;
     while ((ch = getchar()) != '\n' && ch != EOF);
@@ -99,6 +99,7 @@ void prog4() {
     if (point != NULL) {
         printf("Адрес начала подстроки: %p\n", (void*)point);
     } else {
+        point = NULL;
         printf("Подстрока не найдена.\n");
     }
 }
