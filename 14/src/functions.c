@@ -1,18 +1,11 @@
 #include "../include/header.h"
 
 volatile sig_atomic_t flag = 1;
-// volatile sig_atomic_t state = 0;
 
 void sigint_handler(int sig){
-    (void*)sig;
+    (void)sig;
     flag = 0;
 }
-
-// void sigint_handler_client(int sig){
-//     (void*)sig;
-//     state = 2;
-//     // printf("Ctrl + c: Завершение клиента\n");
-// }
 
 void input_txt(char *buffer, WINDOW *input){
     int ch;

@@ -93,7 +93,6 @@ int main() {
     pthread_join(input_thread, NULL);
     
     refresh();
-    // getch();
     endwin();
 
     close(fd_shm);

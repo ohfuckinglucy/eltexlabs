@@ -23,7 +23,6 @@
 #define FTOK_ID 475
 
 extern volatile sig_atomic_t flag;
-// extern volatile sig_atomic_t state;
 
 union semun{
     int val;
@@ -50,5 +49,4 @@ struct thread_args{
 void input_txt(char *buffer, WINDOW *input);
 void get_username(char *name);
 void sigint_handler(int sig);
-// void sigint_handler_client(int sig);
 void *pthread_chat(void *arg);
