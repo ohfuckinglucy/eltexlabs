@@ -26,8 +26,20 @@ int main(){
     int tab_h = getmaxy(tab1) - 2;
     if (tab_h < 1) tab_h = 1;
 
-    scan_dir(&left_panel, ".");
-    scan_dir(&right_panel, ".");
+    char init_path[MAX_PATH];
+    if (!getcwd(init_path, sizeof(init_path))) {
+        perror("getcwd");
+        endwin();
+        return 1;
+    }
+
+    strncpy(left_panel.path, init_path, MAX_PATH - 1);
+    left_panel.path[MAX_PATH - 1] = '\0';
+    strncpy(right_panel.path, init_path, MAX_PATH - 1);
+    right_panel.path[MAX_PATH - 1] = '\0';
+
+    scan_dir(&left_panel);
+    scan_dir(&right_panel);
 
     while(1){
         int key = getch();
@@ -56,7 +68,7 @@ int main(){
                 break;
             case 10:
                 change_dir(cur_panel);
-                scan_dir(cur_panel, ".");
+                scan_dir(cur_panel);
                 break;
             case 'a':
             case 'A':
@@ -72,19 +84,19 @@ int main(){
             case 'd':
             case 'D':
                 del_file(cur_panel);
-                scan_dir(cur_panel, ".");
+                scan_dir(cur_panel);
                 break;
             case 'c':
             case 'C': {
-                struct cur_path *src = (state == 0) ? &right_panel : &left_panel;
-                struct cur_path *dest = (state == 0) ? &left_panel : &right_panel;
+                struct cur_path *dest = (state == 0) ? &right_panel : &left_panel;
+                struct cur_path *src = (state == 0) ? &left_panel : &right_panel;
                 handle_copy_move(0, src, dest);
                 break;
             }
             case 'm':
             case 'M': {
-                struct cur_path *src = (state == 0) ? &right_panel : &left_panel;
-                struct cur_path *dest = (state == 0) ? &left_panel : &right_panel;
+                struct cur_path *dest = (state == 0) ? &right_panel : &left_panel;
+                struct cur_path *src = (state == 0) ? &left_panel : &right_panel;
                 handle_copy_move(1, src, dest);
                 break;
             }
@@ -103,11 +115,8 @@ int main(){
         wborder(tab2, 0, 0, 0, 0, 0, 0, 0, 0);
         wrefresh(tab2);
 
-        char path[MAX_PATH];
-        if (getcwd(path, sizeof(path))) {
-            mvprintw(0, 2, "path: %s", path);
-            clrtoeol();
-        }
+        mvprintw(0, 2, "Path: %s", cur_panel->path);
+        clrtoeol();
 
         mvprintw(row - 3, 3, "TAB-Switch  A-Create file  D-Delete file  C-Copy  M-Move  ENTER-Open  Q-Quit");
         refresh();

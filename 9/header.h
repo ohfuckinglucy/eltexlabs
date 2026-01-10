@@ -22,7 +22,7 @@ struct cur_path{
     char path[MAX_PATH];
 };
 
-void scan_dir(struct cur_path *left_panel, const char *path);
+void scan_dir(struct cur_path *left_panel);
 int input_win(WINDOW *win, char *buffer, int buf_size, const char *msg);
 void create_file(struct cur_path *win, int is_dir);
 void show_dir(WINDOW *win, struct cur_path *left_panel);
