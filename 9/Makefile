@@ -1,7 +1,7 @@
 CC = gcc
 LIBS = -lncurses
-TARGET = test
-SOURCES = test.c
+TARGET = main.elf
+SOURCES = main.c functions.c
 
 all: $(TARGET)
 
